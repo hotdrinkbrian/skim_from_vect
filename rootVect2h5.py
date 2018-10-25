@@ -10,12 +10,15 @@ from ROOT import ROOT, gROOT, TDirectory, TFile, gFile, TBranch, TLeaf, TTree
 from ROOT import AddressOf
 # Import objects (structs)
 #similar to root[0] bash: .L means load
-#gROOT.ProcessLine('.L /home/brian/datas/roottest/objectform/Objects_m1.h+')
-gROOT.ProcessLine('.L /home/brian/git/root/skim/skim_from_vect/skim_from_vect/Objects_m1.h+')
+#gROOT.ProcessLine('.L /home/brian/git/root/skim/skim_from_vect/skim_from_vect/Objects_m1.h+')
+pwd = os.popen('pwd').read()
+pwd = pwd.split('\n')[0]
+pl = '.L ' + pwd + '/Objects' + '/Objects_m1.h+'
+gROOT.ProcessLine(pl)
 from ROOT import JetType, JetTypeSmall, JetTypePFC_fourVect, JetTypePFC_fiveVect, JetTypePFC_sixVect#, JetTypePFCSmall
 Js = JetType()
 
-path        = '/home/brian/datas/roottest/'
+path        = #'/home/brian/datas/roottest/'
 #inName     = 'VBFH_HToSSTobbbb_MH-125_MS-40_ctauS-500_jetOnly.root'
 testOn      = 0
 numOfEntriesToScan = 100 #only when testOn = 1
