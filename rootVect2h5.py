@@ -28,11 +28,13 @@ Npfc        = 40
 vectName    = 'MatchedCHSJet1' #'Jets'
 
 #adjusted for different oldfile location
-args1       = '.'
+args1       = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/'#'.'
+versionName = 'tagInfo_jetOnly0'
+HT          = '300'
 fn          = ''
 newFileName = fn.replace('.root','_skimed.root')
 lola_on     = 0 # 1: prepared for lola
-ct_dep      = 1 #1 for ct dependence comparison
+ct_dep      = 0 #1 for ct dependence comparison
 cut_on      = 1
 life_time   = ['500'] #['0','0p1','0p05','1','5','10','25','50','100','500','1000','2000','5000','10000']
 num_of_jets = 1 #4
@@ -41,13 +43,19 @@ len_of_lt = len(life_time)
 
 if   ct_dep == 0:
     matchOn = 0
-    channel = {'QCD':'QCD_HT50To100_pfc_jetOnly.root'}
-    #channel = {'QCD':'output.root'}
+    if   '50'  == HT:
+        channel = {'QCD':'QCD_HT50to100_' + versionName + '.root'}
+    elif '100' == HT:
+        channel = {'QCD':'QCD_HT100to200_' + versionName + '.root'}
+    elif '200' == HT:
+        channel = {'QCD':'QCD_HT200to300_' + versionName + '.root'}
+    elif '300' == HT:
+        channel = {'QCD':'QCD_HT300to500_' + versionName + '.root'}
 elif ct_dep == 1:
     matchOn = 1
     channel = {}
     for lt in life_time:
-        channel['ct' + lt] = 'VBFH_HToSSTobbbb_MH-125_MS-40_ctauS-' + lt + '_tagInfo_jetOnly.root'
+        channel['ct' + lt] = 'VBFH_HToSSTobbbb_MH-125_MS-40_ctauS-' + lt + '_' + versionName + '.root'
 
 # Struct
 if   lola_on == 0:
@@ -220,18 +228,14 @@ if lola_on == 1:
 #-----------------------------------------------------------------------------------------------------------
 def skim_c( name , newFileName ):
     numOfEntriesToScan_local = numOfEntriesToScan
-
     #--------------------------------
     Jet_old_dict = {}
     for j in range(num_of_jets):
-        #if 'ctauS' in name: 
         Jet_old_dict[j+1] = JetType()
-        #if 'ctauS' in name:
-        #if NJT ==1:
-        #    Jet_old_dict[j+1] = JetTypeSgn()
     #--------------------------------
     oldFile = TFile(name, "READ")
     oldTree = oldFile.Get("ntuple/tree") 
+    NofEntries = oldTree.GetEntriesFast()
     #locate and register the Jet branches of the old ttree
     #~~~~~~~~~~~~~~~~~~~~~~to be improved!!!
     """
@@ -805,12 +809,12 @@ def skim_c( name , newFileName ):
         if i%ti == 1 and i>ti:
             end = timer() 
             dt = end-start
-            tl = int( ((nEntries-i)/ti ) * dt )
+            tl = int( ((NofEntries-i)/ti ) * dt )
             if tl > 60:
                 sys.stdout.write("\r" + 'time left: ' + str( tl/60 ) + 'min' )
                 sys.stdout.flush()
             else: 
-                sys.stdout.write("\r" + 'time left: ' + str( tl/60 ) + 's')
+                sys.stdout.write("\r" + 'time left: ' + 'less than 1 min')
                 sys.stdout.flush() 
         #########################################################
 
