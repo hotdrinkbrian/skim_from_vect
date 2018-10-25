@@ -25,7 +25,7 @@ Npfc        = 40
 vectName    = 'MatchedCHSJet1' #'Jets'
 
 #adjusted for different oldfile location
-args1       = '.'
+args1       = path + 'newSys'#'.'
 fn          = ''
 newFileName = fn.replace('.root','_skimed.root')
 lola_on     = 0 # 1: prepared for lola
