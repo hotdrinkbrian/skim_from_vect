@@ -55,7 +55,7 @@ elif ct_dep == 1:
     matchOn = 1
     channel = {}
     for lt in life_time:
-        channel['ct' + lt] = 'VBFH_HToSSTobbbb_MH-125_MS-40_ctauS-' + lt + '_tagInfo_jetOnly.root'
+        channel['ct' + lt] = 'VBFH_HToSSTobbbb_MH-125_MS-40_ctauS-' + lt + '_' + versionName + '.root'
 
 # Struct
 if   lola_on == 0:
