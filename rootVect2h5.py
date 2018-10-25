@@ -323,39 +323,7 @@ def skim_c( name , newFileName ):
 
                                 Jets1.FracCal        = oldTree.Jets[k].FracCal
                         else: pass    
-                        
-
-                    """
-                    Jets1.pt             = Jet_old_dict[j+1].pt
-                    Jets1.eta            = Jet_old_dict[j+1].eta
-                    Jets1.mass           = Jet_old_dict[j+1].mass
-                                
-                    Jets1.cHadE          = Jet_old_dict[j+1].cHadE
-                    Jets1.nHadE          = Jet_old_dict[j+1].nHadE
-                    Jets1.cHadEFrac      = Jet_old_dict[j+1].cHadEFrac
-                    Jets1.nHadEFrac      = Jet_old_dict[j+1].nHadEFrac
-                    Jets1.nEmE           = Jet_old_dict[j+1].nEmE
-                    Jets1.nEmEFrac       = Jet_old_dict[j+1].nEmEFrac
-                    Jets1.cEmE           = Jet_old_dict[j+1].cEmE     
-                    Jets1.cEmEFrac       = Jet_old_dict[j+1].cEmEFrac                    
-                    Jets1.cmuE           = Jet_old_dict[j+1].cmuE
-                    Jets1.cmuEFrac       = Jet_old_dict[j+1].cmuEFrac
-                    Jets1.muE            = Jet_old_dict[j+1].muE     
-                    Jets1.muEFrac        = Jet_old_dict[j+1].muEFrac
-                    Jets1.eleE           = Jet_old_dict[j+1].eleE
-                    Jets1.eleEFrac       = Jet_old_dict[j+1].eleEFrac
-                    Jets1.eleMulti       = Jet_old_dict[j+1].eleMulti  
-                    Jets1.photonE        = Jet_old_dict[j+1].photonE                   
-                    Jets1.photonEFrac    = Jet_old_dict[j+1].photonEFrac
-                    Jets1.photonMulti    = Jet_old_dict[j+1].photonMulti     
-                    Jets1.cHadMulti      = Jet_old_dict[j+1].cHadMulti
-                    Jets1.npr            = Jet_old_dict[j+1].npr
-                    Jets1.cMulti         = Jet_old_dict[j+1].cMulti
-                    Jets1.nMulti         = Jet_old_dict[j+1].nMulti
-
-                    Jets1.FracCal        = Jet_old_dict[j+1].FracCal
-                    """
-                    
+                                          
                     
                 elif lola_on == 1:
                     if NumOfVecEl == 5:
