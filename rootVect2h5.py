@@ -18,7 +18,7 @@ gROOT.ProcessLine(pl)
 from ROOT import JetType, JetTypeSmall, JetTypePFC_fourVect, JetTypePFC_fiveVect, JetTypePFC_sixVect#, JetTypePFCSmall
 Js = JetType()
 
-path        = '/beegfs/desy/user/hezhiyua/backed/dustData/'+'LLP_tagInfo_jetOnly0/merged/'#'/home/brian/datas/roottest/'
+path        = '/home/brian/datas/roottest/'
 #inName     = 'VBFH_HToSSTobbbb_MH-125_MS-40_ctauS-500_jetOnly.root'
 testOn      = 0
 numOfEntriesToScan = 100 #only when testOn = 1
@@ -28,7 +28,7 @@ Npfc        = 40
 vectName    = 'MatchedCHSJet1' #'Jets'
 
 #adjusted for different oldfile location
-args1       = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/'#'.'
+args1       = '.'
 fn          = ''
 newFileName = fn.replace('.root','_skimed.root')
 lola_on     = 0 # 1: prepared for lola
