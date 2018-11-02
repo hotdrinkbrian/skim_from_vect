@@ -18,7 +18,9 @@ gROOT.ProcessLine(pl)
 from ROOT import JetType, JetTypeSmall, JetTypePFC_fourVect, JetTypePFC_fiveVect, JetTypePFC_sixVect#, JetTypePFCSmall
 Js = JetType()
 
-path        = '/beegfs/desy/user/hezhiyua/backed/dustData/'+'LLP_tagInfo_jetOnly0/merged/'#'/home/brian/datas/roottest/'
+#print sys.argv[1]
+
+path        = '/beegfs/desy/user/hezhiyua/backed/dustData/'+'crab_folder_v2/'#'/home/brian/datas/roottest/'
 #inName     = 'VBFH_HToSSTobbbb_MH-125_MS-40_ctauS-500_jetOnly.root'
 testOn      = 0
 numOfEntriesToScan = 100 #only when testOn = 1
@@ -29,8 +31,9 @@ vectName    = 'MatchedCHSJet1' #'Jets'
 
 #adjusted for different oldfile location
 args1       = '/beegfs/desy/user/hezhiyua/2bBacked/skimmed/'#'.'
-versionName = 'tagInfo_jetOnly0'
-HT          = '300'
+versionN_b  = 'TuneCUETP8M1_13TeV-madgraphMLM-pythia8-v1'
+versionN_s  = 'TuneCUETP8M1_13TeV-powheg-pythia8_PRIVATE-MC'
+HT          = '50'
 fn          = ''
 newFileName = fn.replace('.root','_skimed.root')
 lola_on     = 0 # 1: prepared for lola
@@ -44,18 +47,18 @@ len_of_lt = len(life_time)
 if   ct_dep == 0:
     matchOn = 0
     if   '50'  == HT:
-        channel = {'QCD':'QCD_HT50to100_' + versionName + '.root'}
+        channel = {'QCD':'QCD_HT50to100_' + versionN_b + '.root'}
     elif '100' == HT:
-        channel = {'QCD':'QCD_HT100to200_' + versionName + '.root'}
+        channel = {'QCD':'QCD_HT100to200_' + versionN_b + '.root'}
     elif '200' == HT:
-        channel = {'QCD':'QCD_HT200to300_' + versionName + '.root'}
+        channel = {'QCD':'QCD_HT200to300_' + versionN_b + '.root'}
     elif '300' == HT:
-        channel = {'QCD':'QCD_HT300to500_' + versionName + '.root'}
+        channel = {'QCD':'QCD_HT300to500_' + versionN_b + '.root'}
 elif ct_dep == 1:
     matchOn = 1
     channel = {}
     for lt in life_time:
-        channel['ct' + lt] = 'VBFH_HToSSTobbbb_MH-125_MS-40_ctauS-' + lt + '_' + versionName + '.root'
+        channel['ct' + lt] = 'VBFH_HToSSTobbbb_MH-125_MS-40_ctauS-' + lt + '_' + versionN_s + '.root'
 
 # Struct
 if   lola_on == 0:
@@ -99,7 +102,7 @@ elif cut_on == 0:
 
 
 if lola_on == 1:
-    inName = ''#[for i in channel: channel[i]][0]
+    inName = channel['ct500']#channel['QCD']#''#[for i in channel: channel[i]][0]
 
     j1Entry  = []
     j1Num    = [] 
@@ -256,7 +259,7 @@ def skim_c( name , newFileName ):
     newTree = TTree("tree44", "tree44")
 
     if   lola_on == 0:
-        newTree.Branch( 'Jet1s', Jets1, 'pt/F:eta/F:mass/F:cHadE/F:nHadE/F:cHadEFrac/F:nHadEFrac/F:nEmE/F:nEmEFrac/F:cEmE/F:cEmEFrac/F:cmuE/F:cmuEFrac/F:muE/F:muEFrac/F:eleE/F:eleEFrac/F:eleMulti/F:photonE/F:photonEFrac/F:photonMulti/F:cHadMulti/F:npr/F:cMulti/F:nMulti/F:FracCal/F' )
+        newTree.Branch( 'Jet1s', Jets1, 'pt/F:eta/F:phi/F:mass/F:energy/F:cHadE/F:nHadE/F:cHadEFrac/F:nHadEFrac/F:nEmE/F:nEmEFrac/F:cEmE/F:cEmEFrac/F:cmuE/F:cmuEFrac/F:muE/F:muEFrac/F:eleE/F:eleEFrac/F:eleMulti/F:photonE/F:photonEFrac/F:photonMulti/F:cHadMulti/F:npr/F:cMulti/F:nMulti/F:FracCal/F' )
         if testOn == 0:
             numOfEntriesToScan_local = oldTree.GetEntriesFast()
     elif lola_on == 1:
@@ -296,7 +299,9 @@ def skim_c( name , newFileName ):
                             if eval( condition_str_dict[j+1] ):
                                 Jets1.pt             = oldTree.Jets[k].pt
                                 Jets1.eta            = oldTree.Jets[k].eta
+                                Jets1.phi            = oldTree.Jets[k].phi
                                 Jets1.mass           = oldTree.Jets[k].mass
+                                Jets1.energy         = oldTree.Jets[k].energy
 
                                 Jets1.cHadE          = oldTree.Jets[k].cHadE
                                 Jets1.nHadE          = oldTree.Jets[k].nHadE
@@ -321,7 +326,14 @@ def skim_c( name , newFileName ):
                                 Jets1.cMulti         = oldTree.Jets[k].cMulti
                                 Jets1.nMulti         = oldTree.Jets[k].nMulti
 
-                                Jets1.FracCal        = oldTree.Jets[k].FracCal
+                                fraccal = oldTree.Jets[k].FracCal  
+                                if fraccal <= 0:
+                                    Jets1.FracCal    = 0.
+                                elif fraccal > 400:
+                                    Jets1.FracCal    = 400.
+                                else:
+                                    Jets1.FracCal    = fraccal
+    
                         else: pass    
                         
 
