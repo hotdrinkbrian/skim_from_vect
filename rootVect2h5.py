@@ -8,9 +8,6 @@ from tools import ptrank, padd
 from timeit import default_timer as timer
 from ROOT import ROOT, gROOT, TDirectory, TFile, gFile, TBranch, TLeaf, TTree
 from ROOT import AddressOf
-# Import objects (structs)
-#similar to root[0] bash: .L means load
-#gROOT.ProcessLine('.L /home/brian/git/root/skim/skim_from_vect/skim_from_vect/Objects_m1.h+')
 pwd = os.popen('pwd').read()
 pwd = pwd.split('\n')[0]
 pl = '.L ' + pwd + '/Objects' + '/Objects_m1.h+'
@@ -65,7 +62,7 @@ if   lola_on == 0:
     Jets1 = JetTypeSmall() #for bdt: JetTypeSmall; for lola: JetTypePFC_fourVect
 elif lola_on == 1:
     if   NumOfVecEl == 5:
-        Jets1 = JetTypePFC_fiveVect() #JetTypePFC_fourVect()
+        Jets1 = JetTypePFC_fiveVect() 
     elif NumOfVecEl == 6:
         Jets1 = JetTypePFC_sixVect()
 
